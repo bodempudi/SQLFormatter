@@ -1,6 +1,7 @@
-﻿using SQLFormatter.Core.Models;
+﻿using SQLFormatter.Core.Output;
 using SQLFormatter.Core.Rules;
-using SQLFormatter.Core.Tokenizer; 
+using SQLFormatter.Core.Tokenizer;
+using SQLFormatter.Core.TokenStream;
 
 var sql = "select t1.Col1, t2.Col2 from dbo.Table1 t1";
 
@@ -31,7 +32,13 @@ var keywords = new[]
 var detector = new SqlKeywordDetector(keywords);
 detector.Apply(tokens);
 
-foreach (SqlToken token in tokens)
-{
-    Console.WriteLine($"{token.Type,-12} : {token.NormalizedValue}");
-}
+var stream = new TokenStream(tokens);
+
+Console.WriteLine("Current token at start: " + stream.Current?.NormalizedValue);
+
+var builder = new SqlOutputBuilder();
+string rebuiltSql = builder.Build(tokens);
+
+Console.WriteLine("---- REBUILT SQL ----");
+Console.WriteLine(rebuiltSql);
+Console.WriteLine("---------------------");
