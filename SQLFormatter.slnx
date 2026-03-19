@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="SQLFormatter.CLI/SQLFormatter.CLI.csproj" />
+  <Project Path="SQLFormatter.Core/SQLFormatter.Core.csproj" />
+</Solution>
